@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import os
+import pathlib
 
 from octostarfish import Octostarfish
 
@@ -13,7 +14,10 @@ parser.add_argument(
 parser.add_argument(
     '-t', '--token', default=os.getenv('GITHUB_API_TOKEN'),
     help='GitHub API token')
+parser.add_argument(
+    'clones_root', type=pathlib.Path,
+    help='Base directory under which clones will be created')
 args = parser.parse_args()
 
 
-Octostarfish.run(args.user, args.token)
+Octostarfish.run(args.user, args.token, args.clones_root)
