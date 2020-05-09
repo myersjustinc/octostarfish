@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse
+import logging
 import os
 import pathlib
 
@@ -17,7 +18,17 @@ parser.add_argument(
 parser.add_argument(
     'clones_root', type=pathlib.Path,
     help='Base directory under which clones will be created')
-args = parser.parse_args()
 
 
-Octostarfish.run(args.user, args.token, args.clones_root)
+logger = logging.getLogger('octostarfish')
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    Octostarfish.run(args.user, args.token, args.clones_root)

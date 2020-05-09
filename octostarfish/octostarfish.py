@@ -35,7 +35,7 @@ class Octostarfish(object):
         clones_root - A path-like object one level representing the parent
             directory of the clone.
         """
-        pass  # TODO: Add this.
+        repo.clone(clones_root / repo.gh_path)
 
     def stars(self):
         """Retrieve the user's starred repositories.
