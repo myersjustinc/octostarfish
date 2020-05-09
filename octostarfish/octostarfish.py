@@ -1,4 +1,8 @@
+import logging
 import sys
+
+
+logger = logging.getLogger(__name__)
 
 
 class Octostarfish(object):
@@ -11,7 +15,10 @@ class Octostarfish(object):
         """Run the Octostarfish job."""
         fish = cls(user, token)
         for repo in fish.stars():
-            fish.clone(repo, clones_root)
+            try:
+                fish.clone(repo, clones_root)
+            except Exception:
+                logger.exception('Error pulling {0}'.format(repo.gh_path))
 
     def __init__(self, user, token):
         if user is None:
