@@ -1,6 +1,8 @@
 import logging
 import sys
 
+from .query_stars import query_stars
+
 
 logger = logging.getLogger(__name__)
 
@@ -49,4 +51,4 @@ class Octostarfish(object):
 
         Returns a sequence of octostarfish.repo.Repos.
         """
-        return ()  # TODO: Add this.
+        return query_stars(self.user, self.token)
