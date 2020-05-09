@@ -15,12 +15,14 @@ class Octostarfish(object):
     @classmethod
     def run(cls, user, token, clones_root):
         """Run the Octostarfish job."""
+        logger.info('Starting')
         fish = cls(user, token)
         for repo in fish.stars():
             try:
                 fish.clone(repo, clones_root)
             except Exception:
                 logger.exception('Error pulling {0}'.format(repo.gh_path))
+        logger.info('Done')
 
     def __init__(self, user, token):
         if user is None:
