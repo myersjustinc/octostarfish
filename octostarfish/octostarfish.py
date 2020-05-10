@@ -1,6 +1,7 @@
 import logging
 import sys
 
+from .query_gists import query_gists
 from .query_stars import query_stars
 
 
@@ -17,7 +18,14 @@ class Octostarfish(object):
         """Run the Octostarfish job."""
         logger.info('Starting')
         fish = cls(user, token)
-        for repo in fish.stars():
+        logger.info('Starting to pull starred repositories')
+        for repo in fish.starred_repos():
+            try:
+                fish.clone(repo, clones_root)
+            except Exception:
+                logger.exception('Error pulling {0}'.format(repo.gh_path))
+        logger.info('Starting to pull starred gists')
+        for repo in fish.starred_gists():
             try:
                 fish.clone(repo, clones_root)
             except Exception:
@@ -48,7 +56,14 @@ class Octostarfish(object):
         """
         repo.clone(clones_root / repo.gh_path)
 
-    def stars(self):
+    def starred_gists(self):
+        """Retrieve the user's starred gists
+
+        Returns a sequence of octostarfish.repo.Repos.
+        """
+        return query_gists(self.user, self.token)
+
+    def starred_repos(self):
         """Retrieve the user's starred repositories.
 
         Returns a sequence of octostarfish.repo.Repos.
