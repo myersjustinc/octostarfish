@@ -26,6 +26,7 @@ class Repo(object):
             remote = repo.remotes['origin']
             logger.info('Found {0} clone at {1}'.format(
                 self.gh_path, clone_path))
+            repo.head.reset(index=True, working_tree=True)
         except git.exc.NoSuchPathError:
             logger.debug('Cloning {0} to {1}'.format(self.gh_path, clone_path))
             repo = git.Repo.init(clone_path)
