@@ -28,7 +28,7 @@ class Repo(object):
                 self.gh_path, clone_path))
             repo.git.config('core.filemode', 'false')
             repo.head.reset(index=True, working_tree=True)
-            logger.debug('Ensured {1} is reset'.format(clone_path))
+            logger.debug('Ensured {0} is reset'.format(clone_path))
         except git.exc.NoSuchPathError:
             logger.debug('Cloning {0} to {1}'.format(self.gh_path, clone_path))
             repo = git.Repo.init(clone_path)
